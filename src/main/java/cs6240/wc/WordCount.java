@@ -36,7 +36,7 @@ public class WordCount {
         for (IntWritable val : values) {
             sum += val.get();
         }
-        context.write(key, new IntWritable(sum));
+        context.write(key, new IntWritable(sum));	
     }
  }
         
@@ -45,12 +45,14 @@ public class WordCount {
         
     //Job job = new Job(conf, "wordcount");
     Job job = Job.getInstance(conf, "wordcount");
+    job.setJarByClass(WordCount.class);
 	
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
         
     job.setMapperClass(Map.class);
     job.setReducerClass(Reduce.class);
+    job.setNumReduceTasks(4);
         
     job.setInputFormatClass(TextInputFormat.class);
     job.setOutputFormatClass(TextOutputFormat.class);
